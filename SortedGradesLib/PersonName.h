@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef SORTEDGRADELIB_PERSONNAME_H
+#define SORTEDGRADELIB_PERSONNAME_H
+
 #include <string>
 
 namespace SortedGradesLib
@@ -15,8 +18,9 @@ namespace SortedGradesLib
 
 		bool operator<(const PersonName& other) const;
 
-	private:
-		PersonName();
+		bool operator==(const PersonName& other) const;
 	};
 
 }
+
+#endif

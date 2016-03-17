@@ -27,12 +27,24 @@
     <ClInclude Include="PersonName.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PersonGrade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonGradesReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PersonName.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonGrade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonGradesReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,10 +3,6 @@
 
 using namespace SortedGradesLib;
 
-PersonName::PersonName()
-{
-}
-
 PersonName::PersonName(std::wstring first, std::wstring last)
 	: m_lastName(last), m_firstName(first)
 {
@@ -28,4 +24,9 @@ bool PersonName::operator<(const PersonName& other) const
 		return m_firstName < other.m_firstName;
 	}
 	return false;
+}
+
+bool PersonName::operator == (const PersonName& other) const
+{
+	return m_firstName == other.m_firstName && m_lastName == other.m_lastName;
 }
