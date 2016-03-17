@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="PersonGradesReaderUnitTests.cpp" />
     <ClCompile Include="PersonGradeUnitTests.cpp" />
+    <ClCompile Include="PersonGradeWriterUnitTests.cpp" />
     <ClCompile Include="PersonNameUnitTests.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
