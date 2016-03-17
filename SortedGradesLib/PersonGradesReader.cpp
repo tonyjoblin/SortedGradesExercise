@@ -45,6 +45,10 @@ namespace SortedGradesLib
 
 		trim(firstName);
 		trim(lastName);
+		if (firstName.empty() && lastName.empty())
+		{
+			return;
+		}
 		PersonName name(firstName, lastName);
 		PersonGrade personGrade(name, grade);
 		m_grades.push_back(personGrade);

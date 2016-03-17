@@ -115,5 +115,25 @@ BOOST_FIXTURE_TEST_CASE(BadGradeScoreTest, PersonGradesReaderTestFixture)
 	BOOST_CHECK(reader.m_grades[1].m_grade == tomGrade.m_grade);
 }
 
+BOOST_FIXTURE_TEST_CASE(ReadEmptyInputStreamTest, PersonGradesReaderTestFixture)
+{
+	PersonGradesReader reader;
+	wistringstream input(L"");
+
+	reader.ReadLines(input);
+
+	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+}
+
+BOOST_FIXTURE_TEST_CASE(ReadLineOfWhiteSpaceTest, PersonGradesReaderTestFixture)
+{
+	PersonGradesReader reader;
+	wistringstream input(L"     ");
+
+	reader.ReadLines(input);
+
+	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
