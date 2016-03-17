@@ -1,10 +1,10 @@
 # SortedGradesExercise
 
 A c++ console app that
-* Takes as a parameter a string that represents a text file containing a list of names, and their scores.
-* Orders the names by their score. If scores are the same, order by their last name followed by first name.
-* Creates a new text file called <input-file-name>-graded.txt with the list of sorted score and names.
- 
+* Takes as a parameter a string that represents a text file containing a list of names, and their scores
+* Orders the names by their score. If scores are the same, order by their last name followed by first name
+* Creates a new text file called <input-file-name>-graded.txt with the list of sorted score and names
+
 For example, if the input file contains
 BUNDY, TERESSA, 88
 SMITH, ALLAN, 70
