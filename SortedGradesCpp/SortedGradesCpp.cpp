@@ -10,24 +10,20 @@
 #include "../SortedGradesLib/PersonGradesWriter.h"
 #include "../SortedGradesLib/OutputFileName.h"
 
+#include <boost/filesystem.hpp>
+
+using namespace boost::filesystem;
 using namespace std;
-
 using namespace SortedGradesLib;
-
-wstring GetFileName(const wchar_t* appName)
-{
-	wchar_t fname[_MAX_FNAME];
-	wchar_t ext[_MAX_EXT];
-	_wsplitpath_s(appName, nullptr, 0, nullptr, 0, fname, _MAX_FNAME, ext, _MAX_EXT);
-	return wstring(fname) + wstring(ext);
-}
 
 void DisplayUsageInformation(const wchar_t* appName)
 {
 	// get file name part
-	wcout << L"Usage: " << GetFileName(appName).c_str() << L" grade-file.txt" << endl;
+	path appPath(appName);
+	wcout << L"Usage: " << appPath.filename().c_str() << L" grade-file.txt" << endl;
 }
 
+/// TODO this could have a unit test
 void ReadSortAndWritePersonGrades(wistream& input, wostream& output)
 {
 	PersonGradesReader reader;
@@ -36,7 +32,7 @@ void ReadSortAndWritePersonGrades(wistream& input, wostream& output)
 	writer.Write(output, reader.m_grades);
 }
 
-int _tmain(int argc, wchar_t* argv[])
+int wmain(int argc, wchar_t* argv[])
 {
 	if (argc != 2)
 	{
