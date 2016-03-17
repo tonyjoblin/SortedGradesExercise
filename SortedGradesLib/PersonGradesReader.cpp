@@ -43,9 +43,14 @@ namespace SortedGradesLib
 		float grade = -1;
 		lineStream >> grade;
 
+		if (grade < 0)
+		{
+			return;
+		}
+
 		trim(firstName);
 		trim(lastName);
-		if (firstName.empty() && lastName.empty())
+		if (firstName.empty() || lastName.empty())
 		{
 			return;
 		}

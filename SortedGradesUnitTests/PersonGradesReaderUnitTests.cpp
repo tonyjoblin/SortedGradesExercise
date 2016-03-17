@@ -108,11 +108,9 @@ BOOST_FIXTURE_TEST_CASE(BadGradeScoreTest, PersonGradesReaderTestFixture)
 
 	reader.ReadLines(input);
 
-	BOOST_REQUIRE_EQUAL(2, reader.m_grades.size());
-	BOOST_CHECK(reader.m_grades[0].m_name == peterGrade.m_name);
-	BOOST_CHECK(reader.m_grades[0].m_grade == -1);
-	BOOST_CHECK(reader.m_grades[1].m_name == tomGrade.m_name);
-	BOOST_CHECK(reader.m_grades[1].m_grade == tomGrade.m_grade);
+	BOOST_REQUIRE_EQUAL(1, reader.m_grades.size());
+	BOOST_CHECK(reader.m_grades[0].m_name == tomGrade.m_name);
+	BOOST_CHECK(reader.m_grades[0].m_grade == tomGrade.m_grade);
 }
 
 BOOST_FIXTURE_TEST_CASE(ReadEmptyInputStreamTest, PersonGradesReaderTestFixture)
@@ -129,6 +127,26 @@ BOOST_FIXTURE_TEST_CASE(ReadLineOfWhiteSpaceTest, PersonGradesReaderTestFixture)
 {
 	PersonGradesReader reader;
 	wistringstream input(L"     ");
+
+	reader.ReadLines(input);
+
+	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+}
+
+BOOST_FIXTURE_TEST_CASE(ReadPartialLineTest, PersonGradesReaderTestFixture)
+{
+	PersonGradesReader reader;
+	wistringstream input(L"SMITH, ");
+
+	reader.ReadLines(input);
+
+	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+}
+
+BOOST_FIXTURE_TEST_CASE(ReadPartialLineTest2, PersonGradesReaderTestFixture)
+{
+	PersonGradesReader reader;
+	wistringstream input(L"SMITH, PETER, ");
 
 	reader.ReadLines(input);
 
