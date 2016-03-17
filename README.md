@@ -6,16 +6,26 @@ A c++ console app that
 * Creates a new text file called <input-file-name>-graded.txt with the list of sorted score and names
 
 For example, if the input file contains
+
 BUNDY, TERESSA, 88
+
 SMITH, ALLAN, 70
+
 KING, MADISON, 88
+
 SMITH, FRANCIS, 85
+
  
 Then the output file would be
+
 BUNDY, TERESSA, 88
+
 KING, MADISON, 88
+
 SMITH, FRANCIS, 85
+
 SMITH, ALLAN, 70
+
 
 ## Notes
 * allows fractional/decimal grades like 88.5
