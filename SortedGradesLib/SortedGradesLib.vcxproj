@@ -81,6 +81,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OutputFileName.h" />
     <ClInclude Include="PersonGrade.h" />
     <ClInclude Include="PersonGradesReader.h" />
     <ClInclude Include="PersonGradesWriter.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="OutputFileName.cpp" />
     <ClCompile Include="PersonGrade.cpp" />
     <ClCompile Include="PersonGradesReader.cpp" />
     <ClCompile Include="PersonGradesWriter.cpp" />

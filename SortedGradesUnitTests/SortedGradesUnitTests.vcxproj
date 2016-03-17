@@ -95,6 +95,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="OutputFileNameUnitTests.cpp" />
     <ClCompile Include="PersonGradesReaderUnitTests.cpp" />
     <ClCompile Include="PersonGradeUnitTests.cpp" />
     <ClCompile Include="PersonGradeWriterUnitTests.cpp" />

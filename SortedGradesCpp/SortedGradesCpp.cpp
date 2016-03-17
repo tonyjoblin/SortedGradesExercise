@@ -6,7 +6,13 @@
 #include <fstream>
 #include <string>
 
+#include "../SortedGradesLib/PersonGradesReader.h"
+#include "../SortedGradesLib/PersonGradesWriter.h"
+#include "../SortedGradesLib/OutputFileName.h"
+
 using namespace std;
+
+using namespace SortedGradesLib;
 
 wstring GetFileName(const wchar_t* appName)
 {
@@ -22,6 +28,14 @@ void DisplayUsageInformation(const wchar_t* appName)
 	wcout << L"Usage: " << GetFileName(appName).c_str() << L" grade-file.txt" << endl;
 }
 
+void ReadSortAndWritePersonGrades(wistream& input, wostream& output)
+{
+	PersonGradesReader reader;
+	reader.ReadLines(input);
+	PersonGradesWriter writer;
+	writer.Write(output, reader.m_grades);
+}
+
 int _tmain(int argc, wchar_t* argv[])
 {
 	if (argc != 2)
@@ -32,10 +46,9 @@ int _tmain(int argc, wchar_t* argv[])
 	}
 
 	const wstring gradesFile(argv[1]);
+	const wstring sortedGradesFileName = OutputFileName::Get(gradesFile);
 
-	// open file
-	// if can't open report error
-	wifstream input;
+	std::wifstream input;
 	input.open(gradesFile.c_str());
 	if (!input.good())
 	{
@@ -43,32 +56,19 @@ int _tmain(int argc, wchar_t* argv[])
 		return 1;
 	}
 
-	while (!input.eof())
+	std::wofstream output;
+	output.open(sortedGradesFileName.c_str());
+	if (!output.good())
 	{
-		wstring lastName;
-		getline(input, lastName, L',');
-
-		wstring firstName;
-		getline(input, firstName, L',');
-		
-		float grade;
-		input >> grade;
-
-		if (input.good())
-		{
-			wcout << lastName << L"|" << firstName << L"|" << grade << endl;
-		}
-
-		input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		input.close();
+		wcout << L"Error: Cannot open output file " << sortedGradesFileName.c_str() << endl;
+		return 1;
 	}
 
-	// for each line
-	// parse into parts
-	// create a object for each data
-	// sort
-	// dump output
+	ReadSortAndWritePersonGrades(input, output);
 
 	input.close();
+	output.close();
 
 	return 0;
 }
