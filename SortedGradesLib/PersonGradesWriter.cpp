@@ -20,13 +20,7 @@ namespace SortedGradesLib
 
 	void PersonGradesWriter::Write(std::wostream& output, const std::vector<PersonGrade>& grades) const
 	{
-		vector<PersonGrade> sortedGrades(grades);
-		std::sort(
-			sortedGrades.begin(),
-			sortedGrades.end(),
-			[](const PersonGrade& lhs, const PersonGrade& rhs){ return rhs < lhs; }
-		);
-		for (const PersonGrade& p : sortedGrades)
+		for (const PersonGrade& p : grades)
 		{
 			Write(output, p);
 		}

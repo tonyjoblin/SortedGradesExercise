@@ -19,15 +19,17 @@ namespace SortedGradesLib
 
 	}
 
-	void PersonGradesReader::ReadLines(std::wistream& input)
+	std::vector<PersonGrade> PersonGradesReader::Read(std::wistream& input)
 	{
+		std::vector<PersonGrade> grades;
 		while (!input.eof())
 		{
-			ReadLine(input);
+			ReadLine(input, grades);
 		}
+		return grades;
 	}
 
-	void PersonGradesReader::ReadLine(std::wistream& input)
+	void PersonGradesReader::ReadLine(std::wistream& input, std::vector<PersonGrade>& grades)
 	{
 		wstring line;
 		getline(input, line);
@@ -56,7 +58,7 @@ namespace SortedGradesLib
 		}
 		PersonName name(firstName, lastName);
 		PersonGrade personGrade(name, grade);
-		m_grades.push_back(personGrade);
+		grades.push_back(personGrade);
 	}
 
 }

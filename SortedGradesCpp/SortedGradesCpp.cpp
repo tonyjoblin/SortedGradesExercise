@@ -26,10 +26,17 @@ void DisplayUsageInformation(const wchar_t* appName)
 /// TODO this could have a unit test
 void ReadSortAndWritePersonGrades(wistream& input, wostream& output)
 {
-	PersonGradesReader reader;
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
+
+	vector<PersonGrade> sortedGrades(grades);
+	std::sort(
+		grades.begin(),
+		grades.end(),
+		[](const PersonGrade& lhs, const PersonGrade& rhs){ return rhs < lhs; }
+	);
+
 	PersonGradesWriter writer;
-	writer.Write(output, reader.m_grades);
+	writer.Write(output, grades);
 }
 
 int wmain(int argc, wchar_t* argv[])

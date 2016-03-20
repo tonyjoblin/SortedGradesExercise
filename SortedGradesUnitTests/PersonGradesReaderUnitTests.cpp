@@ -23,134 +23,120 @@ struct PersonGradesReaderTestFixture
 	{
 
 	}
-	PersonName peter;
-	PersonName tom;
-	PersonGrade peterGrade;
-	PersonGrade tomGrade;
+	const PersonName peter;
+	const PersonName tom;
+	const PersonGrade peterGrade;
+	const PersonGrade tomGrade;
+
+	wistringstream input;
 };
 
 BOOST_AUTO_TEST_SUITE(PersonGradesReader_test_suite)
 
 BOOST_FIXTURE_TEST_CASE(ReadSingleLineTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	const wstring line = L"JONES,PETER, 70";
-	wistringstream input(line);
+	input.str(L"JONES,PETER,70");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(1, reader.m_grades.size());
-	BOOST_CHECK_EQUAL(true, peter == reader.m_grades[0].m_name);
+	BOOST_REQUIRE_EQUAL(1, grades.size());
+	BOOST_CHECK_EQUAL(true, peter == grades[0].m_name);
 }
 
 BOOST_FIXTURE_TEST_CASE(RemovesWhiteSpaceAroundNamesTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	const wstring line = L" JONES, PETER, 70";
-	wistringstream input(line);
+	input.str(L" JONES , PETER , 70 ");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(1, reader.m_grades.size());
-	BOOST_CHECK_EQUAL(true, peter == reader.m_grades[0].m_name);
+	BOOST_REQUIRE_EQUAL(1, grades.size());
+	BOOST_CHECK_EQUAL(true, peter == grades[0].m_name);
 }
 
 BOOST_FIXTURE_TEST_CASE(ReadMoreThanOneLineTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	const wstring data = L" JONES, PETER, 70\nSMITH, TOM, 80";
-	wistringstream input(data);
+	input.str(L"JONES, PETER, 70\nSMITH, TOM, 80");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(2, reader.m_grades.size());
-	BOOST_CHECK(reader.m_grades[0].m_name == peterGrade.m_name);
-	BOOST_CHECK(reader.m_grades[0].m_grade == peterGrade.m_grade);
-	BOOST_CHECK(reader.m_grades[1].m_name == tomGrade.m_name);
-	BOOST_CHECK(reader.m_grades[1].m_grade == tomGrade.m_grade);
+	BOOST_REQUIRE_EQUAL(2, grades.size());
+	BOOST_CHECK(grades[0].m_name == peterGrade.m_name);
+	BOOST_CHECK(grades[0].m_grade == peterGrade.m_grade);
+	BOOST_CHECK(grades[1].m_name == tomGrade.m_name);
+	BOOST_CHECK(grades[1].m_grade == tomGrade.m_grade);
 }
 
 BOOST_FIXTURE_TEST_CASE(SlashRSlashNLineEndingsTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	const wstring data = L" JONES, PETER, 70\r\nSMITH, TOM, 80";
-	wistringstream input(data);
+	input.str(L"JONES, PETER, 70\r\nSMITH, TOM, 80");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(2, reader.m_grades.size());
-	BOOST_CHECK(reader.m_grades[0].m_name == peterGrade.m_name);
-	BOOST_CHECK(reader.m_grades[0].m_grade == peterGrade.m_grade);
-	BOOST_CHECK(reader.m_grades[1].m_name == tomGrade.m_name);
-	BOOST_CHECK(reader.m_grades[1].m_grade == tomGrade.m_grade);
+	BOOST_REQUIRE_EQUAL(2, grades.size());
+	BOOST_CHECK(grades[0].m_name == peterGrade.m_name);
+	BOOST_CHECK(grades[0].m_grade == peterGrade.m_grade);
+	BOOST_CHECK(grades[1].m_name == tomGrade.m_name);
+	BOOST_CHECK(grades[1].m_grade == tomGrade.m_grade);
 }
 
 BOOST_FIXTURE_TEST_CASE(ExtraFieldsTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	const wstring data = L" JONES, PETER, 70, somthing\r\nSMITH, TOM, 80";
-	wistringstream input(data);
+	input.str(L" JONES, PETER, 70, somthing\r\nSMITH, TOM, 80");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(2, reader.m_grades.size());
-	BOOST_CHECK(reader.m_grades[0].m_name == peterGrade.m_name);
-	BOOST_CHECK(reader.m_grades[0].m_grade == peterGrade.m_grade);
-	BOOST_CHECK(reader.m_grades[1].m_name == tomGrade.m_name);
-	BOOST_CHECK(reader.m_grades[1].m_grade == tomGrade.m_grade);
+	BOOST_REQUIRE_EQUAL(2, grades.size());
+	BOOST_CHECK(grades[0].m_name == peterGrade.m_name);
+	BOOST_CHECK(grades[0].m_grade == peterGrade.m_grade);
+	BOOST_CHECK(grades[1].m_name == tomGrade.m_name);
+	BOOST_CHECK(grades[1].m_grade == tomGrade.m_grade);
 }
 
 BOOST_FIXTURE_TEST_CASE(BadGradeScoreTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	const wstring data = L" JONES, PETER, foobar, somthing\r\nSMITH, TOM, 80";
-	wistringstream input(data);
+	input.str(L" JONES, PETER, foobar, somthing\r\nSMITH, TOM, 80");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(1, reader.m_grades.size());
-	BOOST_CHECK(reader.m_grades[0].m_name == tomGrade.m_name);
-	BOOST_CHECK(reader.m_grades[0].m_grade == tomGrade.m_grade);
+	BOOST_REQUIRE_EQUAL(1, grades.size());
+	BOOST_CHECK(grades[0].m_name == tomGrade.m_name);
+	BOOST_CHECK(grades[0].m_grade == tomGrade.m_grade);
 }
 
 BOOST_FIXTURE_TEST_CASE(ReadEmptyInputStreamTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	wistringstream input(L"");
+	input.str(L"");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+	BOOST_REQUIRE_EQUAL(0, grades.size());
 }
 
 BOOST_FIXTURE_TEST_CASE(ReadLineOfWhiteSpaceTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	wistringstream input(L"     ");
+	input.str(L"     ");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+	BOOST_REQUIRE_EQUAL(0, grades.size());
 }
 
 BOOST_FIXTURE_TEST_CASE(ReadPartialLineTest, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	wistringstream input(L"SMITH, ");
+	input.str(L"SMITH, ");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+	BOOST_REQUIRE_EQUAL(0, grades.size());
 }
 
 BOOST_FIXTURE_TEST_CASE(ReadPartialLineTest2, PersonGradesReaderTestFixture)
 {
-	PersonGradesReader reader;
-	wistringstream input(L"SMITH, PETER, ");
+	input.str(L"SMITH, PETER, ");
 
-	reader.ReadLines(input);
+	auto grades = PersonGradesReader::Read(input);
 
-	BOOST_REQUIRE_EQUAL(0, reader.m_grades.size());
+	BOOST_REQUIRE_EQUAL(0, grades.size());
 }
 
 

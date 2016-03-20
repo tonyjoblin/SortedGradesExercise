@@ -19,12 +19,10 @@ namespace SortedGradesLib
 		PersonGradesReader();
 		~PersonGradesReader();
 
-		void ReadLines(std::wistream& input);
-
-		std::vector<PersonGrade> m_grades;
+		static std::vector<PersonGrade> Read(std::wistream& input);
 
 	private:
-		void ReadLine(std::wistream& input);
+		static void ReadLine(std::wistream& input, std::vector<PersonGrade>& grades);
 	};
 
 }

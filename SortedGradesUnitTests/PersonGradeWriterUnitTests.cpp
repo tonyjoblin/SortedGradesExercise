@@ -60,16 +60,5 @@ BOOST_FIXTURE_TEST_CASE(WriteMoreThanOneTest, PersonGradesWriterTestFixture)
 	BOOST_CHECK(L"SMITH, TOM, 80\nJONES, PETER, 70\n" == result);
 }
 
-BOOST_FIXTURE_TEST_CASE(WriteInSortedOrderTest, PersonGradesWriterTestFixture)
-{
-	grades.push_back(peterGrade);
-	grades.push_back(tomGrade);
-
-	writer.Write(output, grades);
-
-	wstring result = output.str();
-	BOOST_CHECK(L"SMITH, TOM, 80\nJONES, PETER, 70\n" == result);
-}
-
 
 BOOST_AUTO_TEST_SUITE_END()
