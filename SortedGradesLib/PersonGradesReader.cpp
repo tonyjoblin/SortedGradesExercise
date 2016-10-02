@@ -38,9 +38,11 @@ namespace SortedGradesLib
 
 		wstring lastName;
 		getline(lineStream, lastName, L',');
+		trim(lastName);
 
 		wstring firstName;
 		getline(lineStream, firstName, L',');
+		trim(firstName);
 
 		float grade = -1;
 		lineStream >> grade;
@@ -49,9 +51,7 @@ namespace SortedGradesLib
 		{
 			return;
 		}
-
-		trim(firstName);
-		trim(lastName);
+		
 		if (firstName.empty() || lastName.empty())
 		{
 			return;
