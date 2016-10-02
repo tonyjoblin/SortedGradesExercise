@@ -8,8 +8,7 @@
 
 #include <istream>
 #include <vector>
-
-using namespace std;
+#include <boost/optional.hpp>
 
 namespace SortedGradesLib
 {
@@ -21,8 +20,6 @@ namespace SortedGradesLib
 
 		static std::vector<PersonGrade> Read(std::wistream& input);
 
-	private:
-		static void ReadLine(std::wistream& input, std::vector<PersonGrade>& grades);
 	};
 
 }

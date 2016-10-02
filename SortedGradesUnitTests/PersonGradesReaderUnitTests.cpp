@@ -8,6 +8,7 @@
 
 using namespace boost;
 using namespace SortedGradesLib;
+using namespace std;
 
 struct PersonGradesReaderTestFixture
 {
