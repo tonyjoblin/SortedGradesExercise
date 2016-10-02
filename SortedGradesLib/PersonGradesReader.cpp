@@ -29,6 +29,21 @@ namespace SortedGradesLib
 		return grades;
 	}
 
+	static bool ValidateGrade(const float& grade)
+	{
+		return 0 <= grade;
+	}
+
+	static bool ValidateName(const wstring& firstName, const wstring& lastName)
+	{
+		return !firstName.empty() && !lastName.empty();
+	}
+
+	static bool ValidatePersonGradeValues(const wstring& firstName, const wstring& lastName, const float& grade)
+	{
+		return ValidateGrade(grade) && ValidateName(firstName, lastName);
+	}
+
 	void PersonGradesReader::ReadLine(std::wistream& input, std::vector<PersonGrade>& grades)
 	{
 		wstring line;
@@ -47,15 +62,11 @@ namespace SortedGradesLib
 		float grade = -1;
 		lineStream >> grade;
 
-		if (grade < 0)
+		if (!ValidatePersonGradeValues(firstName, lastName, grade))
 		{
 			return;
 		}
 		
-		if (firstName.empty() || lastName.empty())
-		{
-			return;
-		}
 		PersonName name(firstName, lastName);
 		PersonGrade personGrade(name, grade);
 		grades.push_back(personGrade);
